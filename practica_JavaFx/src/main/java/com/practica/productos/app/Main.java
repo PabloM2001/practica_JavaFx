@@ -1,54 +1,65 @@
 package com.practica.productos.app;
 
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        
+
         ProductoService servicio = new ProductoService();
 
         TextField campo = new TextField();
-
-        Button boton = new Button("Mostrar");
-
         TextArea area = new TextArea();
         area.setEditable(false);
 
-        boton.setOnAction(e -> {
+        Button agregar = new Button("Agregar");
+        Button eliminar = new Button("Eliminar");
+        Button buscar = new Button("Buscar");
 
-            try {
+        agregar.setOnAction(e -> {
+            servicio.agregar(new Producto(campo.getText()));
 
-                servicio.agregar(new Producto(campo.getText()));
-
-                String texto = "";
-
-                for (Producto p : servicio.listar()) {
-                    texto += p.getNombre() + "\n";
-                }
-
+            String texto = "";
+            for (Producto p : servicio.listar()) {
+                texto += p.getNombre() + "\n";
+            }
             area.setText(texto);
+        });
 
-            } catch (Exception ex) {        
+        eliminar.setOnAction(e -> {
+            servicio.eliminar(campo.getText());
 
-                area.setText(ex.getMessage());
+            String texto = "";
+            for (Producto p : servicio.listar()) {
+                texto += p.getNombre() + "\n";
+            }
+            area.setText(texto);
+        });
+
+        buscar.setOnAction(e -> {
+            Producto p = servicio.buscar(campo.getText());
+
+            if (p != null) {
+                area.setText("Encontrado: " + p.getNombre());
+            } else {
+                area.setText("Producto no encontrado");
             }
         });
 
-        VBox layout = new VBox(10, campo, boton, area);
+        HBox botones = new HBox(10, agregar, eliminar, buscar);
+
+        VBox layout = new VBox(10, campo, botones, area);
 
         Scene scene = new Scene(layout, 300, 200);
-
-        stage.setTitle("Interacción JavaFX");
 
         stage.setScene(scene);
         stage.show();
