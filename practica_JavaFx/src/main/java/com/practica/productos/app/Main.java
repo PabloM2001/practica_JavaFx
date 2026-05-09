@@ -1,26 +1,34 @@
-
 package com.practica.productos.app;
 
-import javafx.scene.control.Label;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-
 
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
 
-        Label label = new Label("Hola JavaFX");
+        TextField campo = new TextField();
 
-        VBox root = new VBox(label);
+        Button boton = new Button("Mostrar");
 
-        Scene scene = new Scene(root, 300, 200);
+        Label label = new Label();
 
-        stage.setTitle("Mi primera app JavaFX");
+        boton.setOnAction(e -> {
+            label.setText(campo.getText());
+        });
+
+        VBox layout = new VBox(10, campo, boton, label);
+
+        Scene scene = new Scene(layout, 300, 200);
+
+        stage.setTitle("Interacción JavaFX");
+
         stage.setScene(scene);
         stage.show();
     }
