@@ -20,7 +20,17 @@ public class Main extends Application {
         Label label = new Label();
 
         boton.setOnAction(e -> {
-            label.setText(campo.getText());
+
+            try {
+
+                Producto p = new Producto(campo.getText());
+
+                label.setText(p.getNombre());
+
+            } catch (Exception ex) {
+
+                label.setText(ex.getMessage());
+            }
         });
 
         VBox layout = new VBox(10, campo, boton, label);
