@@ -8,10 +8,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        
+        ProductoService servicio = new ProductoService();
 
         TextField campo = new TextField();
 
@@ -23,11 +26,17 @@ public class Main extends Application {
 
             try {
 
-                Producto p = new Producto(campo.getText());
+                servicio.agregar(new Producto(campo.getText()));
 
-                label.setText(p.getNombre());
+                String texto = "";
 
-            } catch (Exception ex) {
+                for (Producto p : servicio.listar()) {
+                    texto += p.getNombre() + "\n";
+                }
+
+            label.setText(texto);
+
+            } catch (Exception ex) {        
 
                 label.setText(ex.getMessage());
             }
