@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,7 +21,8 @@ public class Main extends Application {
 
         Button boton = new Button("Mostrar");
 
-        Label label = new Label();
+        TextArea area = new TextArea();
+        area.setEditable(false);
 
         boton.setOnAction(e -> {
 
@@ -34,15 +36,15 @@ public class Main extends Application {
                     texto += p.getNombre() + "\n";
                 }
 
-            label.setText(texto);
+            area.setText(texto);
 
             } catch (Exception ex) {        
 
-                label.setText(ex.getMessage());
+                area.setText(ex.getMessage());
             }
         });
 
-        VBox layout = new VBox(10, campo, boton, label);
+        VBox layout = new VBox(10, campo, boton, area);
 
         Scene scene = new Scene(layout, 300, 200);
 
